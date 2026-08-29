@@ -4,12 +4,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                echo 'Checking out source code...'
-            }
-        }
-
         stage('Build') {
             steps {
                 echo 'Building website...'
@@ -23,6 +17,7 @@ pipeline {
                     if not exist style.css exit /b 1
                     if not exist script.js exit /b 1
                 '''
+
                 echo 'Website files found. Test successful!'
             }
         }
@@ -32,9 +27,9 @@ pipeline {
                 bat '''
                     if not exist C:\\JenkinsDeploy\\my-web-project mkdir C:\\JenkinsDeploy\\my-web-project
 
-                    xcopy /E /Y /I index.html C:\\JenkinsDeploy\\my-web-project
-                    xcopy /E /Y /I style.css C:\\JenkinsDeploy\\my-web-project
-                    xcopy /E /Y /I script.js C:\\JenkinsDeploy\\my-web-project
+                    copy /Y index.html C:\\JenkinsDeploy\\my-web-project\\index.html
+                    copy /Y style.css C:\\JenkinsDeploy\\my-web-project\\style.css
+                    copy /Y script.js C:\\JenkinsDeploy\\my-web-project\\script.js
                 '''
 
                 echo 'Website deployed successfully!'
